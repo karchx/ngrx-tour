@@ -7,8 +7,9 @@ import { MaterialModule } from '../material/material.module';
 
 import { LayoutComponent } from './components/layout/layout.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { DialogHeaderComponent } from './components/dialog-header/dialog-header.component';
 
-const components = [LayoutComponent, ErrorPageComponent];
+const components = [LayoutComponent, ErrorPageComponent, DialogHeaderComponent];
 
 @NgModule({
   declarations: [...components],

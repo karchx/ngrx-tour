@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app.state';
 import { Heroe } from 'src/app/core/models/heroe.model';
-import { HeroesService } from 'src/app/core/services/heroes.service';
+import { AddHeroeDialogComponent } from '../../components/add-heroe-dialog/add-heroe-dialog.component';
 import { loadHeroes } from '../../heroes.actions';
 import { selectHeroes } from '../../heroes.selector';
 
@@ -15,14 +16,14 @@ import { selectHeroes } from '../../heroes.selector';
 export class IndexComponent implements OnInit {
   heroes$: Observable<Heroe[]> = new Observable();
 
-  constructor(
-    private heroesService: HeroesService,
-    private store: Store<AppState>
-  ) {}
+  constructor(private store: Store<AppState>, private matDialog: MatDialog) {}
 
   ngOnInit(): void {
     this.heroes$ = this.store.select(selectHeroes);
     this.store.dispatch(loadHeroes());
-    //  this.heroesService.getHeroes();
+  }
+
+  add() {
+    this.matDialog.open(AddHeroeDialogComponent);
   }
 }

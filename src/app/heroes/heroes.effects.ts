@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, EMPTY, map, mergeMap } from 'rxjs';
 import { HeroesService } from '../core/services/heroes.service';
-import { LOADED_HEROES, LOAD_HEROES } from './heroes.actions';
+import { PowersService } from '../core/services/powers.service';
+import {
+  LOADED_HEROES,
+  LOADED_POWERS,
+  LOAD_HEROES,
+  LOAD_POWERS,
+} from './heroes.actions';
 
 @Injectable()
 export class HeroesEffects {
@@ -18,8 +24,21 @@ export class HeroesEffects {
     )
   );
 
+  loadedPowers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(LOAD_POWERS),
+      mergeMap(() =>
+        this.powerService.getPowers().pipe(
+          map((powers) => ({ type: LOADED_POWERS, powers })),
+          catchError(() => EMPTY)
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
-    private heroesService: HeroesService
+    private heroesService: HeroesService,
+    private powerService: PowersService
   ) {}
 }
