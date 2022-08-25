@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { debounceTime, filter, map, Observable, of, switchMap } from 'rxjs';
 import { AppState } from 'src/app/app.state';
 import { Character } from 'src/app/core/models/character.model';
+import { Heroe } from 'src/app/core/models/heroe.model';
 import { Power } from 'src/app/core/models/power.model';
 import { CharactersService } from 'src/app/core/services/characters.service';
-import { loadPowers } from '../../heroes.actions';
+import { createHero, loadPowers } from '../../heroes.actions';
 import { selectPowers } from '../../heroes.selector';
 
 @Component({
@@ -16,8 +18,10 @@ import { selectPowers } from '../../heroes.selector';
   styleUrls: ['./add-heroe-dialog.component.scss'],
 })
 export class AddHeroeDialogComponent implements OnInit {
+  private character!: Character;
   filteredCharacters$!: Observable<Character[]>;
   form!: FormGroup;
+
   powers$: Observable<Power[]> = new Observable();
   selectedPowers: Power[] = [];
 
@@ -42,6 +46,10 @@ export class AddHeroeDialogComponent implements OnInit {
     );
   }
 
+  characterSelected(event: MatAutocompleteSelectedEvent) {
+    this.character = event.option.value;
+  }
+
   close() {
     this.matDialogRef.close();
   }
@@ -61,6 +69,18 @@ export class AddHeroeDialogComponent implements OnInit {
       filter((marvelResponse) => marvelResponse.code === 200),
       map((marvelResponse) => marvelResponse.data.results)
     );
+  }
+
+  save() {
+    if (!this.form.valid) {
+      return;
+    }
+
+    const heroe: Heroe = this.form.value;
+    heroe.character = this.character;
+    heroe.powers = this.selectedPowers.map((power) => power.id);
+
+    this.store.dispatch(createHero({ heroe }));
   }
 
   togglePower(power: Power) {

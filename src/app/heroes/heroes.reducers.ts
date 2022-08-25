@@ -2,6 +2,8 @@ import { createReducer, on } from '@ngrx/store';
 import { Heroe } from '../core/models/heroe.model';
 import { Power } from '../core/models/power.model';
 import {
+  createHero,
+  createHeroSuccess,
   loadedHeroes,
   loadedPowers,
   loadHeroes,
@@ -10,6 +12,7 @@ import {
 
 export interface State {
   error?: Error;
+  heroe?: Heroe;
   heroes: Heroe[];
   powers: Power[];
 }
@@ -26,6 +29,20 @@ export const heroesReducer = createReducer(
   }),
   on(loadedHeroes, (state, action) => {
     return { ...state, heroes: action.heroes };
+  }),
+  on(createHero, (state) => {
+    return { ...state, heroe: undefined, error: undefined };
+  }),
+  on(createHeroSuccess, (state, action) => {
+    return {
+      ...state,
+      heroe: action.heroe,
+      heroes:
+        state.heroes === undefined
+          ? [action.heroe]
+          : [...state.heroes, action.heroe],
+      error: undefined,
+    };
   })
 );
 

@@ -12,6 +12,10 @@ export class HeroesService extends BaseService {
     super();
   }
 
+  createHeroe(hereo: Heroe): Observable<Heroe> {
+    return this.httpClient.post<Heroe>(`${this.BASE_URL}/heroes`, hereo);
+  }
+
   getHeroes(): Observable<Heroe[]> {
     return this.httpClient.get<Heroe[]>(`${this.BASE_URL}/heroes`);
   }

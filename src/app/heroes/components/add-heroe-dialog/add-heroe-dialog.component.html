@@ -1,7 +1,7 @@
 <app-dialog-header (close)="close()">
   <h3>Add Super Heroe</h3>
 </app-dialog-header>
-<form [formGroup]="form">
+<form [formGroup]="form" (submit)="save()">
   <mat-dialog-content>
     <mat-form-field>
       <input
@@ -10,7 +10,7 @@
         placeholder="Name"
         [matAutocomplete]="auto"
       />
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="characterSelected($event)">
         <mat-option
           *ngFor="let character of filteredCharacters$ | async"
           [value]="character"
