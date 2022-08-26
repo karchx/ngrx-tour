@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { AppState } from 'src/app/app.state';
 import { Heroe } from 'src/app/core/models/heroe.model';
 import { AddHeroeDialogComponent } from '../../components/add-heroe-dialog/add-heroe-dialog.component';
-import { loadHeroes } from '../../heroes.actions';
+import { loadHeroes, removeHeroe } from '../../heroes.actions';
 import { selectHeroes } from '../../heroes.selector';
 
 @Component({
@@ -25,5 +25,9 @@ export class IndexComponent implements OnInit {
 
   add() {
     this.matDialog.open(AddHeroeDialogComponent);
+  }
+
+  delete(heroe: Heroe) {
+    this.store.dispatch(removeHeroe({ heroe }));
   }
 }

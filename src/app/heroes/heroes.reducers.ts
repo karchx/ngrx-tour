@@ -8,6 +8,8 @@ import {
   loadedPowers,
   loadHeroes,
   loadPowers,
+  removeHeroe,
+  removeHeroeSuccess,
 } from './heroes.actions';
 
 export interface State {
@@ -42,6 +44,15 @@ export const heroesReducer = createReducer(
           ? [action.heroe]
           : [...state.heroes, action.heroe],
       error: undefined,
+    };
+  }),
+  on(removeHeroe, (state, action) => {
+    return { ...state, heroe: action.heroe };
+  }),
+  on(removeHeroeSuccess, (state, action) => {
+    return {
+      ...state,
+      heroes: [...state.heroes].filter((heroe) => heroe.id !== action.heroe.id),
     };
   })
 );

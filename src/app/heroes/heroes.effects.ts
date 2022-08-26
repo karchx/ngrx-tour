@@ -10,6 +10,9 @@ import {
   LOADED_POWERS,
   loadHeroes,
   loadPowers,
+  removeHeroe,
+  REMOVE_HEREO,
+  REMOVE_HEREO_SUCCESS,
 } from './heroes.actions';
 
 @Injectable()
@@ -44,6 +47,18 @@ export class HeroesEffects {
       mergeMap((payload) =>
         this.heroesService.createHeroe(payload.heroe).pipe(
           map((heroe) => ({ type: CREATE_HERO_SUCCESS, heroe })),
+          catchError(() => EMPTY)
+        )
+      )
+    )
+  );
+
+  deleteHeroe$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeHeroe),
+      mergeMap((payload) =>
+        this.heroesService.deleteHeroe(payload.heroe).pipe(
+          map((heroe) => ({ type: REMOVE_HEREO_SUCCESS, heroe })),
           catchError(() => EMPTY)
         )
       )

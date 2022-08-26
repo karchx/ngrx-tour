@@ -5,5 +5,5 @@
       Add Hero
     </button>
   </div>
-  <app-heroes [heroes]="heroes$ | async"></app-heroes>
+  <app-heroes [heroes]="heroes$ | async" (delete)="delete($event)"></app-heroes>
 </app-layout>
