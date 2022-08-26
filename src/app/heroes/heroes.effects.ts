@@ -5,7 +5,7 @@ import { HeroesService } from '../core/services/heroes.service';
 import { PowersService } from '../core/services/powers.service';
 import {
   createHero,
-  CREATE_HERO_SUCCESS,
+  CREATE_HEREO_SUCCESS,
   LOADED_HEROES,
   LOADED_POWERS,
   loadHeroes,
@@ -46,7 +46,7 @@ export class HeroesEffects {
       ofType(createHero),
       mergeMap((payload) =>
         this.heroesService.createHeroe(payload.heroe).pipe(
-          map((heroe) => ({ type: CREATE_HERO_SUCCESS, heroe })),
+          map((heroe) => ({ type: CREATE_HEREO_SUCCESS, heroe })),
           catchError(() => EMPTY)
         )
       )
