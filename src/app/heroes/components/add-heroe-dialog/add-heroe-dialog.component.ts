@@ -81,6 +81,7 @@ export class AddHeroeDialogComponent implements OnInit {
     heroe.powers = this.selectedPowers.map((power) => power.id);
 
     this.store.dispatch(createHero({ heroe }));
+    this.close();
   }
 
   togglePower(power: Power) {

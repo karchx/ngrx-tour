@@ -26,14 +26,8 @@ const initialState: State = {
 
 export const heroesReducer = createReducer(
   initialState,
-  on(loadHeroes, (state) => {
-    return { ...state, error: undefined };
-  }),
   on(loadedHeroes, (state, action) => {
     return { ...state, heroes: action.heroes };
-  }),
-  on(createHero, (state) => {
-    return { ...state, heroe: undefined, error: undefined };
   }),
   on(createHeroSuccess, (state, action) => {
     return {
@@ -46,22 +40,19 @@ export const heroesReducer = createReducer(
       error: undefined,
     };
   }),
-  on(removeHeroe, (state, action) => {
-    return { ...state, heroe: action.heroe };
-  }),
-  on(removeHeroeSuccess, (state, action) => {
+
+  on(removeHeroeSuccess, (state, { id }) => {
+    const heroes = state.heroes.filter((heroe) => heroe.id !== id);
     return {
       ...state,
-      heroes: [...state.heroes].filter((heroe) => heroe.id !== action.heroe.id),
+      heroes,
+      error: undefined,
     };
   })
 );
 
 export const powersReducer = createReducer(
   initialState,
-  on(loadPowers, (state) => {
-    return { ...state, error: undefined };
-  }),
   on(loadedPowers, (state, action) => {
     return { ...state, powers: action.powers };
   })

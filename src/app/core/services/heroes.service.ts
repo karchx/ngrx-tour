@@ -16,8 +16,8 @@ export class HeroesService extends BaseService {
     return this.httpClient.post<Heroe>(`${this.BASE_URL}/heroes`, hereo);
   }
 
-  deleteHeroe(hereo: Heroe): Observable<Heroe> {
-    return this.httpClient.delete<Heroe>(`${this.BASE_URL}/heroes/${hereo.id}`);
+  deleteHeroe(id: number): Observable<Heroe> {
+    return this.httpClient.delete<Heroe>(`${this.BASE_URL}/heroes/${id}`);
   }
 
   getHeroes(): Observable<Heroe[]> {

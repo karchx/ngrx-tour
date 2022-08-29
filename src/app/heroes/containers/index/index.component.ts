@@ -28,6 +28,6 @@ export class IndexComponent implements OnInit {
   }
 
   delete(heroe: Heroe) {
-    this.store.dispatch(removeHeroe({ heroe }));
+    this.store.dispatch(removeHeroe({ id: heroe.id }));
   }
 }

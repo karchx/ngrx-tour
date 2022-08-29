@@ -38,11 +38,8 @@ export const loadedCharacer = createAction(
   props<{ characters: Character[] }>()
 );
 
-export const removeHeroe = createAction(
-  REMOVE_HEREO,
-  props<{ heroe: Heroe }>()
-);
+export const removeHeroe = createAction(REMOVE_HEREO, props<{ id: number }>());
 export const removeHeroeSuccess = createAction(
   REMOVE_HEREO_SUCCESS,
-  props<{ heroe: Heroe }>()
+  props<{ id: number }>()
 );

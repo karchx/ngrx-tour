@@ -11,7 +11,7 @@ import {
   loadHeroes,
   loadPowers,
   removeHeroe,
-  REMOVE_HEREO,
+  removeHeroeSuccess,
   REMOVE_HEREO_SUCCESS,
 } from './heroes.actions';
 
@@ -57,8 +57,8 @@ export class HeroesEffects {
     this.actions$.pipe(
       ofType(removeHeroe),
       mergeMap((payload) =>
-        this.heroesService.deleteHeroe(payload.heroe).pipe(
-          map((heroe) => ({ type: REMOVE_HEREO_SUCCESS, heroe })),
+        this.heroesService.deleteHeroe(payload.id).pipe(
+          map(() => ({ type: REMOVE_HEREO_SUCCESS, id: payload.id })),
           catchError(() => EMPTY)
         )
       )
